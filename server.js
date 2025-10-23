@@ -13,18 +13,25 @@ server.use(methodName);
 server.use(express.json());
 server.use(express.static('public'));
 
-server.get('/items', (req, res) => {
-    const data = JSON.parse(readFileSync("./data/db.json", 'utf8'));
+server.get('/products', (req, res) => {
+    const data = JSON.parse(readFileSync("./data/products.json", 'utf8'));
     res.json(data);
   });
 
-   server.post('/items', (req, res) => {
-    const data = JSON.parse(readFileSync("./data/db.json", 'utf8'));
-    const newItem = { id: uuidv4(), name: req.body.name , surname: req.body.surname };
+   server.post('/products', (req, res) => {
+    const data = JSON.parse(readFileSync("./data/products.json", 'utf8'));
+    const newItem = { id: uuidv4(), age: req.body.age , product: req.body.product};
+    if(isNaN(newItem.age) === false){
+      if(newItem.age > 17){
     data.push(newItem);
-    writeFileSync("./data/db.json", JSON.stringify(data, null, 2));
-    res.status(201).json(newItem);
-  });
+    writeFileSync("./data/products.json", JSON.stringify(data, null, 2));
+    res.status(201).json(newItem);}
+    else{
+      res.send("age must be big 18");
+    }
+  }else{
+    res.send("age must be a number")
+  }});
 
 server.listen(process.env.PORT, () => {
     console.log(`server is listen on port ${process.env.PORT}`);

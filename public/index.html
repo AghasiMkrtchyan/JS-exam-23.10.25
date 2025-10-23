@@ -1,20 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Mini Express App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Mini Express App</h1>
+  <h1>Product List</h1>
 
-  <button id="getBtn">GET Items</button>
-  <button id="postBtn">POST Item</button>
+  <div id="product-list"></div>
 
-  <div id="output"></div>
+  <h2>Add Product</h2>
+  <form id="product-form">
+    <input type="text" id="product" placeholder="Product name" required />
+    <input type="number" id="age" placeholder="Your Age" required />
+    <button type="submit">Add</button>
+  </form>
 
-  <!-- JS ֆայլը կապում ենք այսպես -->
-  <script type="module" src="script.js"></script>
+  <p id="message"></p>
+
+  <script src="script.js"></script>
 </body>
 </html>
 

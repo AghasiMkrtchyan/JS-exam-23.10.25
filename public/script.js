@@ -1,35 +1,35 @@
-const getBtn = document.getElementById('getBtn');
-const postBtn = document.getElementById('postBtn');
-const output = document.getElementById('output');
+//GPT em arel 
+async function loadProducts() {
+  const res = await fetch('/products');
+  const data = await res.json();
+  const list = document.getElementById('product-list');
+  list.innerHTML = '';
 
-// GET request
-getBtn.addEventListener('click', async () => {
-  try {
-    const res = await fetch('/items');
-    const data = await res.json();
-    output.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-  } catch (err) {
-    output.textContent = 'Error fetching data';
-  }
+  data.forEach(p => {
+    const div = document.createElement('div');
+    div.classList.add('product-item');
+    div.innerHTML = `<strong>${p.product}</strong> (age: ${p.age})`;
+    list.appendChild(div);
+  });
+}
+
+
+document.getElementById('product-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const product = document.getElementById('product').value;
+  const age = document.getElementById('age').value;
+
+  const res = await fetch('/products', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ product, age })
+  });
+
+  const msg = await res.text();
+  document.getElementById('message').textContent = msg;
+
+  loadProducts();
+  e.target.reset();
 });
 
-// POST request
-postBtn.addEventListener('click', async () => {
-  const name = prompt('Enter name:');
-  const surname = prompt('Enter surname:');
-
-  if (!name || !surname) return alert('Name and surname required');
-
-  try {
-    const res = await fetch('/items', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, surname })
-    });
-
-    const data = await res.json();
-    output.innerHTML = `<p>New item created:</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
-  } catch (err) {
-    output.textContent = 'Error creating item';
-  }
-});
+loadProducts();
