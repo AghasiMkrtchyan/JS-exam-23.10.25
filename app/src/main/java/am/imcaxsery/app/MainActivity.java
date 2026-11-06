@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
         super.onCreate(state);
         getWindow().setStatusBarColor(Color.rgb(11, 20, 32));
         getWindow().setNavigationBarColor(Color.rgb(11, 20, 32));
+        getWindow().getDecorView().setSystemUiVisibility(0);
         web = new WebView(this);
         web.setBackgroundColor(Color.rgb(11, 20, 32));
         web.getSettings().setJavaScriptEnabled(true);
